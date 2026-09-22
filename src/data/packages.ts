@@ -67,14 +67,18 @@ export const packages: PartyPackage[] = [
     aiGeneratedBackground: true,
   },
   {
-    id: 'lets-glow-crazy',
-    name: "Let's Glow Crazy",
-    tagline: 'Neon nights & blacklight magic',
+    id: 'cozy-christmas',
+    name: 'Cozy Christmas',
+    tagline: 'Fireplace glow & holiday magic',
     description:
-      'Neon colors, blacklight energy, and glow in the dark accents transform the space into an unforgettable glow party. Decorative pillows, UV reactive décor, and a bold “Let’s Glow Crazy” backdrop create an immersive atmosphere filled with vibrant color, high energy fun, and unforgettable memories.',
-    image: publicAsset('images/lets-glow-crazy.jpg'),
-    accent: 'lavender',
-    stripeEnvKey: 'VITE_STRIPE_LINK_GLOW_CRAZY',
+      'White tents, plaid throws, and peppermint pillows by the firelight. A festive sleepover filled with gingerbread charm, personalized name plates, and warm fairy lights. Perfect for holiday gatherings and December birthdays.',
+    image: publicAsset('images/cozy-christmas.png'),
+    photos: [
+      publicAsset('images/cozy-christmas.jpg'),
+      publicAsset('images/cozy-christmas-pillows.jpg'),
+    ],
+    accent: 'mint',
+    stripeEnvKey: 'VITE_STRIPE_LINK_COZY_CHRISTMAS',
     aiGeneratedBackground: true,
   },
   {
@@ -93,18 +97,14 @@ export const packages: PartyPackage[] = [
     aiGeneratedBackground: true,
   },
   {
-    id: 'cozy-christmas',
-    name: 'Cozy Christmas',
-    tagline: 'Fireplace glow & holiday magic',
+    id: 'lets-glow-crazy',
+    name: "Let's Glow Crazy",
+    tagline: 'Neon nights & blacklight magic',
     description:
-      'White tents, plaid throws, and peppermint pillows by the firelight. A festive sleepover filled with gingerbread charm, personalized name plates, and warm fairy lights. Perfect for holiday gatherings and December birthdays.',
-    image: publicAsset('images/cozy-christmas.png'),
-    photos: [
-      publicAsset('images/cozy-christmas.jpg'),
-      publicAsset('images/cozy-christmas-pillows.jpg'),
-    ],
-    accent: 'mint',
-    stripeEnvKey: 'VITE_STRIPE_LINK_COZY_CHRISTMAS',
+      'Neon colors, blacklight energy, and glow in the dark accents transform the space into an unforgettable glow party. Decorative pillows, UV reactive décor, and a bold “Let’s Glow Crazy” backdrop create an immersive atmosphere filled with vibrant color, high energy fun, and unforgettable memories.',
+    image: publicAsset('images/lets-glow-crazy.jpg'),
+    accent: 'lavender',
+    stripeEnvKey: 'VITE_STRIPE_LINK_GLOW_CRAZY',
     aiGeneratedBackground: true,
   },
 ]
