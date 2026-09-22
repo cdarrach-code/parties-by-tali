@@ -84,6 +84,10 @@ export const packages: PartyPackage[] = [
     description:
       'Ready, set, play! Scoreboard energy, bold colors, and a setup built for friendly competition create the ultimate gaming sleepover. Level Up pillows and ambient LED lighting set the stage for late night laughs, unforgettable moments, and epic memories.',
     image: publicAsset('images/game-on.jpg'),
+    photos: [
+      publicAsset('images/game-on-closeup.jpg'),
+      publicAsset('images/game-on-tents.jpg'),
+    ],
     accent: 'sky',
     stripeEnvKey: 'VITE_STRIPE_LINK_GAME_ON',
     aiGeneratedBackground: true,
