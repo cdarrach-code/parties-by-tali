@@ -21,11 +21,14 @@
     <!-- Netlify Forms: static form so the build detects fields for SPA submits -->
     <form
       name="booking"
+      action="/__forms.html"
       method="POST"
+      netlify
       data-netlify="true"
       data-netlify-honeypot="bot-field"
       hidden
     >
+      <input type="hidden" name="form-name" value="booking" />
       <input type="text" name="bot-field" />
       <input type="text" name="name" />
       <input type="email" name="email" />

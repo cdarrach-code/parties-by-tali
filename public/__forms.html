@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form endpoint</title>
+  </head>
+  <body>
+    <!-- Parsed by Netlify at deploy time for the React booking form -->
+    <form
+      name="booking"
+      action="/__forms.html"
+      method="POST"
+      netlify
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+    >
+      <input type="hidden" name="form-name" value="booking" />
+      <input type="text" name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="eventDate" />
+      <input type="text" name="guests" />
+      <input type="text" name="theme" />
+    </form>
+  </body>
+</html>

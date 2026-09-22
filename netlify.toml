@@ -6,6 +6,7 @@
   NODE_VERSION = "22"
   VITE_BASE_PATH = "/"
 
+# SPA fallback. Existing files like /__forms.html are served first (not forced).
 [[redirects]]
   from = "/*"
   to = "/index.html"
