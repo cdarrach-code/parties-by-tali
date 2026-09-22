@@ -103,6 +103,10 @@ export const packages: PartyPackage[] = [
     description:
       'Neon colors, blacklight energy, and glow in the dark accents transform the space into an unforgettable glow party. Decorative pillows, UV reactive décor, and a bold “Let’s Glow Crazy” backdrop create an immersive atmosphere filled with vibrant color, high energy fun, and unforgettable memories.',
     image: publicAsset('images/lets-glow-crazy.jpg'),
+    photos: [
+      publicAsset('images/lets-glow-crazy-closeup.jpg'),
+      publicAsset('images/lets-glow-crazy-tents.jpg'),
+    ],
     accent: 'lavender',
     stripeEnvKey: 'VITE_STRIPE_LINK_GLOW_CRAZY',
     aiGeneratedBackground: true,
