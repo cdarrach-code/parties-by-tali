@@ -662,6 +662,10 @@
   object-position: center 82%;
 }
 
+.package-photo-scroller img[src*='pretty-in-pink-tent'] {
+  object-position: center 28%;
+}
+
 .package-carousel-btn {
   position: absolute;
   z-index: 2;

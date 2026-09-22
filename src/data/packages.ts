@@ -47,6 +47,10 @@ export const packages: PartyPackage[] = [
     description:
       "White tents, fairy lights, and delicate accents create a dreamy night that's equal parts cozy and magical. Plush pillows, personalized touches, and soft light pink details transport guests to a dreamlike world where twinkling lights, cozy corners, and magical moments fill the evening with wonder.",
     image: publicAsset('images/pretty-in-pink.jpg'),
+    photos: [
+      publicAsset('images/pretty-in-pink-tent.jpg'),
+      publicAsset('images/pretty-in-pink-tray.jpg'),
+    ],
     accent: 'blush',
     stripeEnvKey: 'VITE_STRIPE_LINK_PRETTY_IN_PINK',
     aiGeneratedBackground: true,
