@@ -18,6 +18,12 @@ npm run build
 npm run preview
 ```
 
+## Hosting (Netlify)
+
+The site deploys from this repo via Netlify (`netlify.toml`). Build command is `npm run build`; publish directory is `dist`.
+
+Connect the GitHub repo in the Netlify dashboard (or with the Netlify CLI). After that, every push to `main` publishes automatically.
+
 ## Stripe Payment Links
 
 1. Create a [Stripe](https://stripe.com) account and stay in **test mode** first.
