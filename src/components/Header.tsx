@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { publicAsset } from '../data/packages'
 
 const links = [
   { href: '#themes', label: 'Themes' },
@@ -25,7 +26,7 @@ export function Header({ onBookParty }: HeaderProps) {
   return (
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
       <a className="brand-mark" href="#top" onClick={() => setOpen(false)}>
-        <img src="/images/logo.png?v=2" alt="Parties by Tali" />
+        <img src={publicAsset('images/logo.png?v=2')} alt="Parties by Tali" />
       </a>
 
       <button

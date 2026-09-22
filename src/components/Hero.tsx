@@ -1,3 +1,5 @@
+import { publicAsset } from '../data/packages'
+
 type HeroProps = {
   onBookParty: () => void
 }
@@ -9,7 +11,7 @@ export function Hero({ onBookParty }: HeroProps) {
       <div className="hero-inner">
         <img
           className="hero-logo"
-          src="/images/logo.png?v=2"
+          src={publicAsset('images/logo.png?v=2')}
           alt=""
         />
         <h1 id="hero-brand" className="hero-brand visually-hidden">

@@ -21,6 +21,10 @@ export const CONTACT = {
   email: 'partiesbytali@gmail.com',
 } as const
 
+export function publicAsset(path: string) {
+  return `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+}
+
 /** Introductory Grand Opening pricing */
 export const PRICING = {
   label: 'Introductory Grand Opening Pricing',
@@ -42,7 +46,7 @@ export const packages: PartyPackage[] = [
     tagline: 'Sparkle, white & best friend energy',
     description:
       "White tents, fairy lights, and delicate accents create a dreamy night that's equal parts cozy and magical. Plush pillows, personalized touches, and soft light pink details transport guests to a dreamlike world where twinkling lights, cozy corners, and magical moments fill the evening with wonder.",
-    image: '/images/pretty-in-pink.jpg',
+    image: publicAsset('images/pretty-in-pink.jpg'),
     accent: 'blush',
     stripeEnvKey: 'VITE_STRIPE_LINK_PRETTY_IN_PINK',
     aiGeneratedBackground: true,
@@ -53,7 +57,7 @@ export const packages: PartyPackage[] = [
     tagline: 'Cabin coziness, without leaving home',
     description:
       'Woodsy cabin vibes, warm neutral colors, and starry night lighting create the charm of a cozy backyard campout. Adventure inspired details set the scene for unforgettable evenings filled with laughter, connection, and a touch of outdoor adventure.',
-    image: '/images/camp-slumberwood.jpg',
+    image: publicAsset('images/camp-slumberwood.jpg'),
     accent: 'peach',
     stripeEnvKey: 'VITE_STRIPE_LINK_CAMP_SLUMBERWOOD',
     aiGeneratedBackground: true,
@@ -64,7 +68,7 @@ export const packages: PartyPackage[] = [
     tagline: 'Neon nights & blacklight magic',
     description:
       'Neon colors, blacklight energy, and glow in the dark accents transform the space into an unforgettable glow party. Decorative pillows, UV reactive décor, and a bold “Let’s Glow Crazy” backdrop create an immersive atmosphere filled with vibrant color, high energy fun, and unforgettable memories.',
-    image: '/images/lets-glow-crazy.jpg',
+    image: publicAsset('images/lets-glow-crazy.jpg'),
     accent: 'lavender',
     stripeEnvKey: 'VITE_STRIPE_LINK_GLOW_CRAZY',
     aiGeneratedBackground: true,
@@ -75,7 +79,7 @@ export const packages: PartyPackage[] = [
     tagline: 'Controllers up, play all night',
     description:
       'Ready, set, play! Scoreboard energy, bold colors, and a setup built for friendly competition create the ultimate gaming sleepover. Level Up pillows and ambient LED lighting set the stage for late night laughs, unforgettable moments, and epic memories.',
-    image: '/images/game-on.jpg',
+    image: publicAsset('images/game-on.jpg'),
     accent: 'sky',
     stripeEnvKey: 'VITE_STRIPE_LINK_GAME_ON',
     aiGeneratedBackground: true,
@@ -86,7 +90,7 @@ export const packages: PartyPackage[] = [
     tagline: 'Fireplace glow & holiday magic',
     description:
       'White tents, plaid throws, and peppermint pillows by the firelight. A festive sleepover filled with gingerbread charm, personalized name plates, and warm fairy lights. Perfect for holiday gatherings and December birthdays.',
-    image: '/images/cozy-christmas.png',
+    image: publicAsset('images/cozy-christmas.png'),
     accent: 'mint',
     stripeEnvKey: 'VITE_STRIPE_LINK_COZY_CHRISTMAS',
     aiGeneratedBackground: true,

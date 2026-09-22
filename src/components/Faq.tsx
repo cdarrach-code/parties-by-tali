@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     question: 'How many guests can I book?',
-    answer: `You can book ${PRICING.maxGuests === 1 ? '1 guest' : `1 to ${PRICING.maxGuests} guests`}. Share your guest count when you book so we can create the perfect sleepover setup.`,
+    answer: `You can book 1 to ${PRICING.maxGuests} guests. Share your guest count when you book so we can create the perfect sleepover setup.`,
   },
   {
     question: 'What themes do you offer?',
