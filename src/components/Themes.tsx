@@ -23,9 +23,6 @@ export function Themes() {
               <a href={`#package-${pkg.id}`}>
                 <div className="theme-tile-media">
                   <img src={pkg.image} alt="" loading="lazy" />
-                  {pkg.comingSoon && (
-                    <span className="coming-soon-banner">Coming Soon</span>
-                  )}
                 </div>
                 <div className="theme-tile-copy">
                   <h3>{pkg.name}</h3>

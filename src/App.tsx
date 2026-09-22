@@ -29,7 +29,7 @@ export default function App() {
         <Hero onBookParty={() => openBooking()} />
         <Intro />
         <Themes />
-        <Packages onEmailToBook={openBooking} />
+        <Packages onRequestBooking={openBooking} />
         <Celebrate />
         <Faq />
         <Contact />

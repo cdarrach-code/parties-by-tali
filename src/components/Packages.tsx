@@ -1,5 +1,4 @@
 import {
-  CONTACT,
   PRICING,
   INCLUSION_ROWS,
   formatPrice,
@@ -9,10 +8,10 @@ import {
 } from '../data/packages'
 
 type PackagesProps = {
-  onEmailToBook: (themeId: PackageId) => void
+  onRequestBooking: (themeId: PackageId) => void
 }
 
-export function Packages({ onEmailToBook }: PackagesProps) {
+export function Packages({ onRequestBooking }: PackagesProps) {
   return (
     <section
       className="section packages"
@@ -70,9 +69,6 @@ export function Packages({ onEmailToBook }: PackagesProps) {
               >
                 <div className="package-media">
                   <img src={pkg.image} alt={`${pkg.name} sleepover setup`} loading="lazy" />
-                  {pkg.comingSoon && (
-                    <span className="coming-soon-banner">Coming Soon</span>
-                  )}
                 </div>
                 <div className="package-body">
                   <p className="package-tagline">{pkg.tagline}</p>
@@ -93,13 +89,7 @@ export function Packages({ onEmailToBook }: PackagesProps) {
                       guest
                     </small>
                   </p>
-                  {pkg.comingSoon ? (
-                    <p className="package-note">
-                      This theme is coming soon. Email{' '}
-                      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>{' '}
-                      to join the waitlist.
-                    </p>
-                  ) : stripe ? (
+                  {stripe ? (
                     <a
                       className="btn"
                       href={stripe}
@@ -112,9 +102,9 @@ export function Packages({ onEmailToBook }: PackagesProps) {
                     <button
                       type="button"
                       className="btn"
-                      onClick={() => onEmailToBook(pkg.id)}
+                      onClick={() => onRequestBooking(pkg.id)}
                     >
-                      Email to book
+                      Request booking
                     </button>
                   )}
                 </div>

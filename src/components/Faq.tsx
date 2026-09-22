@@ -36,7 +36,7 @@ const faqs = [
   },
   {
     question: 'How do I book a party?',
-    answer: `Use Book a party or Email to book on the site, or reach us at ${CONTACT.email}. We’ll confirm your date, theme, and guest count.`,
+    answer: `Use Book a party or Request booking on the site, or reach us at ${CONTACT.email}. We’ll confirm your date, theme, and guest count.`,
   },
   {
     question: 'Is a deposit required?',

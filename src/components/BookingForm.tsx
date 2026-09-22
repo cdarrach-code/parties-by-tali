@@ -1,5 +1,6 @@
 import { type FormEvent, useEffect, useId, useRef, useState } from 'react'
 import {
+  CONTACT,
   PRICING,
   type PackageId,
   packages,
@@ -35,15 +36,6 @@ function todayIsoDate(): string {
   const month = String(now.getMonth() + 1).padStart(2, '0')
   const day = String(now.getDate()).padStart(2, '0')
   return `${now.getFullYear()}-${month}-${day}`
-}
-
-function encodeFormBody(data: Record<string, string>): string {
-  return Object.entries(data)
-    .map(
-      ([key, value]) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
-    )
-    .join('&')
 }
 
 export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
@@ -107,7 +99,7 @@ export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
       const response = await fetch('/__forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encodeFormBody({
+        body: new URLSearchParams({
           'form-name': FORM_NAME,
           'bot-field': botField,
           name: name.trim(),
@@ -116,7 +108,7 @@ export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
           eventDate: formatEventDate(eventDate),
           guests,
           theme: themeName,
-        }),
+        }).toString(),
       })
       if (!response.ok) throw new Error(`Form submit failed (${response.status})`)
       setStatus('success')
@@ -169,14 +161,7 @@ export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
               Share a few details and Tali will follow up by email to confirm
               your date.
             </p>
-            <form
-              className="booking-form"
-              name={FORM_NAME}
-              method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
-              onSubmit={onSubmit}
-            >
+            <form className="booking-form" name={FORM_NAME} onSubmit={onSubmit}>
               <input type="hidden" name="form-name" value={FORM_NAME} />
               <p className="booking-honeypot" aria-hidden="true">
                 <label>
@@ -283,7 +268,7 @@ export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
               {status === 'error' && (
                 <p className="booking-error" role="alert">
                   Something went wrong sending your request. Please try again,
-                  or email partiesbytali@gmail.com.
+                  or email {CONTACT.email}.
                 </p>
               )}
               <div className="booking-actions">

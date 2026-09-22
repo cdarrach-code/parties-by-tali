@@ -13,7 +13,6 @@ export type PartyPackage = {
   image: string
   accent: string
   stripeEnvKey: string
-  comingSoon?: boolean
   aiGeneratedBackground?: boolean
 }
 
