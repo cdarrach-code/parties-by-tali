@@ -49,7 +49,7 @@ export const packages: PartyPackage[] = [
     image: publicAsset('images/pretty-in-pink.jpg'),
     photos: [
       publicAsset('images/pretty-in-pink-tent.jpg'),
-      publicAsset('images/pretty-in-pink-tray.jpg'),
+      publicAsset('images/pretty-in-pink-tents.jpg'),
     ],
     accent: 'blush',
     stripeEnvKey: 'VITE_STRIPE_LINK_PRETTY_IN_PINK',
