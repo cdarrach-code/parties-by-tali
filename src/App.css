@@ -320,8 +320,10 @@
 }
 
 .intro-title {
-  white-space: nowrap;
-  font-size: clamp(1.15rem, 5.2vw, 2.75rem);
+  max-width: 100%;
+  font-size: clamp(1.45rem, 6vw, 2.75rem);
+  text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 .themes {
