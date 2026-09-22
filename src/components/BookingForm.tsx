@@ -1,6 +1,5 @@
 import { type FormEvent, useEffect, useId, useRef, useState } from 'react'
 import {
-  CONTACT,
   PRICING,
   type PackageId,
   packages,
@@ -11,6 +10,10 @@ type BookingFormProps = {
   themeId: PackageId | ''
   onClose: () => void
 }
+
+type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
+
+const FORM_NAME = 'booking'
 
 const GUEST_COUNTS = Array.from(
   { length: PRICING.maxGuests },
@@ -34,6 +37,15 @@ function todayIsoDate(): string {
   return `${now.getFullYear()}-${month}-${day}`
 }
 
+function encodeFormBody(data: Record<string, string>): string {
+  return Object.entries(data)
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+    )
+    .join('&')
+}
+
 export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
   const titleId = useId()
   const nameId = useId()
@@ -50,6 +62,8 @@ export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
   const [eventDate, setEventDate] = useState('')
   const [guests, setGuests] = useState('')
   const [theme, setTheme] = useState(themeId)
+  const [botField, setBotField] = useState('')
+  const [status, setStatus] = useState<SubmitState>('idle')
 
   useEffect(() => {
     if (!open) return
@@ -59,6 +73,8 @@ export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
     setEventDate('')
     setGuests('')
     setTheme(themeId)
+    setBotField('')
+    setStatus('idle')
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     const timer = window.setTimeout(() => nameRef.current?.focus(), 50)
@@ -79,29 +95,34 @@ export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
 
   if (!open) return null
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (status === 'submitting') return
+
     const themeName =
       packages.find((pkg) => pkg.id === theme)?.name ?? theme
-    const subject = encodeURIComponent(`Book ${themeName} sleepover`)
-    const body = encodeURIComponent(
-      [
-        'Hi Tali!',
-        '',
-        "I'd like to book a sleepover.",
-        '',
-        `Name: ${name.trim()}`,
-        `Email: ${email.trim()}`,
-        `Phone: ${phone.trim()}`,
-        `Event date: ${formatEventDate(eventDate)}`,
-        `Number of guests: ${guests}`,
-        `Theme: ${themeName}`,
-        '',
-        'Thank you!',
-      ].join('\n'),
-    )
-    window.location.href = `mailto:${CONTACT.email}?subject=${subject}&body=${body}`
-    onClose()
+
+    setStatus('submitting')
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encodeFormBody({
+          'form-name': FORM_NAME,
+          'bot-field': botField,
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          eventDate: formatEventDate(eventDate),
+          guests,
+          theme: themeName,
+        }),
+      })
+      if (!response.ok) throw new Error(`Form submit failed (${response.status})`)
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -125,112 +146,166 @@ export function BookingForm({ open, themeId, onClose }: BookingFormProps) {
         >
           ×
         </button>
-        <p className="eyebrow">Email to book</p>
-        <h2 id={titleId}>Request your sleepover</h2>
-        <p className="booking-lead">
-          Share a few details and we&apos;ll open an email to{' '}
-          {CONTACT.email} so Tali can confirm your date.
-        </p>
-        <form className="booking-form" onSubmit={onSubmit}>
-          <label htmlFor={nameId}>
-            Name
-            <input
-              ref={nameRef}
-              id={nameId}
-              name="name"
-              type="text"
-              autoComplete="name"
-              required
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-          </label>
-          <label htmlFor={emailId}>
-            Email address
-            <input
-              id={emailId}
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </label>
-          <label htmlFor={phoneId}>
-            Phone number
-            <input
-              id={phoneId}
-              name="phone"
-              type="tel"
-              autoComplete="tel"
-              inputMode="tel"
-              required
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-            />
-          </label>
-          <label htmlFor={dateId}>
-            Event date
-            <input
-              id={dateId}
-              name="eventDate"
-              type="date"
-              required
-              min={todayIsoDate()}
-              value={eventDate}
-              onChange={(event) => setEventDate(event.target.value)}
-            />
-          </label>
-          <label htmlFor={guestsId}>
-            Number of guests
-            <select
-              id={guestsId}
-              name="guests"
-              required
-              value={guests}
-              onChange={(event) => setGuests(event.target.value)}
-            >
-              <option value="" disabled>
-                Select guests
-              </option>
-              {GUEST_COUNTS.map((count) => (
-                <option key={count} value={count}>
-                  {count === 1 ? '1 guest' : `${count} guests`}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor={themeFieldId}>
-            Theme
-            <select
-              id={themeFieldId}
-              name="theme"
-              required
-              value={theme}
-              onChange={(event) =>
-                setTheme(event.target.value as PackageId | '')
-              }
-            >
-              <option value="" disabled>
-                Select a theme
-              </option>
-              {packages.map((pkg) => (
-                <option key={pkg.id} value={pkg.id}>
-                  {pkg.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <div className="booking-actions">
-            <button type="submit" className="btn">
-              Send booking email
-            </button>
-            <button type="button" className="btn btn-ghost" onClick={onClose}>
-              Cancel
-            </button>
+        <p className="eyebrow">Book a party</p>
+        <h2 id={titleId}>
+          {status === 'success' ? 'Request received' : 'Request your sleepover'}
+        </h2>
+
+        {status === 'success' ? (
+          <div className="booking-success">
+            <p className="booking-lead">
+              Thanks! Tali will review your details and follow up by email to
+              confirm your date.
+            </p>
+            <div className="booking-actions">
+              <button type="button" className="btn" onClick={onClose}>
+                Done
+              </button>
+            </div>
           </div>
-        </form>
+        ) : (
+          <>
+            <p className="booking-lead">
+              Share a few details and Tali will follow up by email to confirm
+              your date.
+            </p>
+            <form
+              className="booking-form"
+              name={FORM_NAME}
+              method="POST"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              onSubmit={onSubmit}
+            >
+              <input type="hidden" name="form-name" value={FORM_NAME} />
+              <p className="booking-honeypot" aria-hidden="true">
+                <label>
+                  Don’t fill this out
+                  <input
+                    name="bot-field"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={botField}
+                    onChange={(event) => setBotField(event.target.value)}
+                  />
+                </label>
+              </p>
+              <label htmlFor={nameId}>
+                Name
+                <input
+                  ref={nameRef}
+                  id={nameId}
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                />
+              </label>
+              <label htmlFor={emailId}>
+                Email address
+                <input
+                  id={emailId}
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </label>
+              <label htmlFor={phoneId}>
+                Phone number
+                <input
+                  id={phoneId}
+                  name="phone"
+                  type="tel"
+                  autoComplete="tel"
+                  inputMode="tel"
+                  required
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                />
+              </label>
+              <label htmlFor={dateId}>
+                Event date
+                <input
+                  id={dateId}
+                  name="eventDate"
+                  type="date"
+                  required
+                  min={todayIsoDate()}
+                  value={eventDate}
+                  onChange={(event) => setEventDate(event.target.value)}
+                />
+              </label>
+              <label htmlFor={guestsId}>
+                Number of guests
+                <select
+                  id={guestsId}
+                  name="guests"
+                  required
+                  value={guests}
+                  onChange={(event) => setGuests(event.target.value)}
+                >
+                  <option value="" disabled>
+                    Select guests
+                  </option>
+                  {GUEST_COUNTS.map((count) => (
+                    <option key={count} value={count}>
+                      {count === 1 ? '1 guest' : `${count} guests`}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label htmlFor={themeFieldId}>
+                Theme
+                <select
+                  id={themeFieldId}
+                  name="theme"
+                  required
+                  value={theme}
+                  onChange={(event) =>
+                    setTheme(event.target.value as PackageId | '')
+                  }
+                >
+                  <option value="" disabled>
+                    Select a theme
+                  </option>
+                  {packages.map((pkg) => (
+                    <option key={pkg.id} value={pkg.id}>
+                      {pkg.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {status === 'error' && (
+                <p className="booking-error" role="alert">
+                  Something went wrong sending your request. Please try again,
+                  or email partiesbytali@gmail.com.
+                </p>
+              )}
+              <div className="booking-actions">
+                <button
+                  type="submit"
+                  className="btn"
+                  disabled={status === 'submitting'}
+                >
+                  {status === 'submitting' ? 'Sending…' : 'Send request'}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={onClose}
+                  disabled={status === 'submitting'}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </>
+        )}
       </div>
     </div>
   )
