@@ -622,11 +622,71 @@
   overflow: hidden;
 }
 
+.package-media.has-gallery {
+  min-height: 16rem;
+}
+
+@media (min-width: 860px) {
+  .package-media.has-gallery {
+    min-height: 22rem;
+    height: 100%;
+  }
+}
+
+.package-photo-scroller {
+  display: flex;
+  height: 100%;
+  min-height: inherit;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: color-mix(in srgb, var(--rose) 55%, white) transparent;
+  scrollbar-width: thin;
+}
+
 .package-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   min-height: 14rem;
+}
+
+.package-photo-scroller img {
+  flex: 0 0 100%;
+  min-height: inherit;
+  scroll-snap-align: start;
+}
+
+.package-carousel-btn {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  translate: 0 -50%;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  font-size: 1.7rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  padding-bottom: 0.12rem;
+}
+
+.package-carousel-btn.is-prev {
+  left: 0.65rem;
+}
+
+.package-carousel-btn.is-next {
+  right: 0.65rem;
+}
+
+.package-carousel-btn:hover {
+  background: var(--white);
 }
 
 .package-body {

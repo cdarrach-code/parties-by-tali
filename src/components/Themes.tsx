@@ -10,7 +10,21 @@ export function Themes() {
     const tile = scroller.querySelector<HTMLElement>('.theme-tile')
     const gap = 16
     const amount = (tile?.offsetWidth ?? 280) + gap
-    scroller.scrollBy({ left: direction * amount, behavior: 'smooth' })
+    const max = scroller.scrollWidth - scroller.clientWidth
+    const next = scroller.scrollLeft + direction * amount
+
+    if (direction === 1 && scroller.scrollLeft >= max - 8) {
+      scroller.scrollTo({ left: 0, behavior: 'smooth' })
+      return
+    }
+    if (direction === -1 && scroller.scrollLeft <= 8) {
+      scroller.scrollTo({ left: max, behavior: 'smooth' })
+      return
+    }
+    scroller.scrollTo({
+      left: Math.min(max, Math.max(0, next)),
+      behavior: 'smooth',
+    })
   }
 
   return (

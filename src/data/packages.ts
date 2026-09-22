@@ -11,6 +11,7 @@ export type PartyPackage = {
   tagline: string
   description: string
   image: string
+  photos?: string[]
   accent: string
   stripeEnvKey: string
   aiGeneratedBackground?: boolean
@@ -57,6 +58,10 @@ export const packages: PartyPackage[] = [
     description:
       'Woodsy cabin vibes, warm neutral colors, and starry night lighting create the charm of a cozy backyard campout. Adventure inspired details set the scene for unforgettable evenings filled with laughter, connection, and a touch of outdoor adventure.',
     image: publicAsset('images/camp-slumberwood.jpg'),
+    photos: [
+      publicAsset('images/camp-slumberwood-closeup.jpg'),
+      publicAsset('images/camp-slumberwood-tents.jpg'),
+    ],
     accent: 'peach',
     stripeEnvKey: 'VITE_STRIPE_LINK_CAMP_SLUMBERWOOD',
     aiGeneratedBackground: true,
@@ -90,6 +95,10 @@ export const packages: PartyPackage[] = [
     description:
       'White tents, plaid throws, and peppermint pillows by the firelight. A festive sleepover filled with gingerbread charm, personalized name plates, and warm fairy lights. Perfect for holiday gatherings and December birthdays.',
     image: publicAsset('images/cozy-christmas.png'),
+    photos: [
+      publicAsset('images/cozy-christmas.jpg'),
+      publicAsset('images/cozy-christmas-pillows.jpg'),
+    ],
     accent: 'mint',
     stripeEnvKey: 'VITE_STRIPE_LINK_COZY_CHRISTMAS',
     aiGeneratedBackground: true,
